@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>暗黑模式</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.day {
+			background: white;
+			color: #333333;
+		}
+
+		@media (prefers-color-scheme: dark) {
+		  .day.dark-scheme   { background:  #333; color: white; }
+		}
+
+		@media (prefers-color-scheme: light) {
+		  .day.light-scheme   { background: yellow; color:  green; }
+		}
+
+		.day {
+		  display: inline-block;
+		  padding: 1em;
+		  width: 7em;
+		  height: 2em;
+		  vertical-align: middle;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="day">Day (initial)</div>
+	<div class="day dark-scheme light-scheme">
+		白天或者晚上么
+	</div>
+</body>
+</html>
