@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>input框弹起键盘后，在键盘上面</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.input {
+			margin-top: 600px;
+			width: 80%;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			height: 50px;
+		}
+	</style>
+</head>
+<body>
+	<input id="J_input" class="input" type="text" placeholder="这里输入内容">
+	<div id="J_Btn"></div>
+	<script>
+	const input = document.getElementById('J_input');
+	input.addEventListener('focus',listenFocus)
+
+	/**
+	 * 
+     * 根据键盘弹出后，window视口的大小来判断进行向上滚动页面
+     */
+    function listenFocus () {
+      const winH = window.innerHeight
+      input.value = winH
+      const btn = document.getElementById('J_Btn')
+      let count = 1
+      setTimeout(function scrollToUp () {
+        const winheight = window.innerHeight
+
+        // winH 是弹起之前的的window.innerHeight高度
+        // 针对三星等个别手机修改的
+        if (winheight + 100 >= winH) {
+          setTimeout(scrollToUp, 300)
+          return
+        }
+
+        
+        let scrollTop = btn.offsetTop + 10 - winheight
+        count += 1
+
+        // 已经弹起就退出
+        if (document.body.scrollTop >= scrollTop - 10 || window.scrollY >= scrollTop - 10) {
+          return
+        }
+        // 进行滚动页面
+        document.body.scrollTop = scrollTop
+        if (!document.body.scrollTop) {
+          window.scrollTo(0, scrollTop)
+        }
+
+        // 如果弹起有延迟的话，尝试三次去检查是否弹起键盘
+        if (
+          document.body.scrollTop < scrollTop - 10 &&
+          window.scrollY < scrollTop - 10 &&
+          count <= 3
+        ) {
+          setTimeout(scrollToUp, 300)
+        }
+      }, 300)
+    }
+	</script>
+</body>
+</html>
